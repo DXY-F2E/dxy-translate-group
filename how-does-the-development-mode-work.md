@@ -165,3 +165,62 @@ doSomethingProd();
   </summary>
   Mischief managed.
 </details>
+
+---
+
+<details>
+  <summary>
+    注意, 更复杂的表达式这将不会工作:
+  </summary>
+  Note that this wouldn’t work with more complex expressions:
+</details>
+
+```js
+let mode = 'production';
+if (mode !== 'production') {
+  // 🔴 not guaranteed to be eliminated
+}
+```
+
+<details>
+  <summary>
+    JavaScript 静态分析工具还没有太智能, 因为该门语言的动态天性.当它们看到诸如 <code>mode</code> 这种变量而不是像 <code>false</code> 或者是 <code>'production' !== 'production'</code> 这种表达式的时候, 它们往往会放弃.
+  </summary>
+  JavaScript static analysis tools are not very smart due to the dynamic nature of the language. When they see variables like <code>mode</code> rather than static expressions like <code>false</code> or <code>'production' !== 'production'</code>, they often give up.
+</details>
+
+<details>
+  <summary>
+    相似的, 当你使用顶级 import 语句的时候, 在穿越模块边界的 JavaScript 之中的死码移除通常也不会工作:
+  </summary>
+  Similarly, dead code elimination in JavaScript often doesn’t work well across the module boundaries when you use the top-level import statements:
+</details>
+
+```js
+import {someFunc} from 'some-module';
+
+if (false) {
+  someFunc()
+}
+```
+
+<details>
+  <summary>
+    因此你需要以非常机械的方式写书写代码, 使得条件绝对静态, 并且确保你想要移除的所有代码都在其中.
+  </summary>
+  So you need to write code in a very mechanical way that makes the condition definitely static, and ensure that all code you want to eliminate is inside of it.
+</details>
+
+<details>
+  <summary>
+    为了让这些工作, 你的打包器需要去做 <code>process.env.NODE</code> 的替换, 并且需要知道你想打包该项目的哪一种模式.
+  </summary>
+  For all of this to work, your bundler needs to do the process.env.NODE_ENV replacement, and needs to know in which mode you want to build the project in.
+</details>
+
+<details>
+  <summary>
+    几年以前, 忘了配置环境是过去常常看到的. 你会经常看到一个项目在开发环境下部署到了生产环境.
+  </summary>
+  A few years ago, it used to be common to forget to configure the environment. You’d often see a project in development mode deployed to production.
+</details>
