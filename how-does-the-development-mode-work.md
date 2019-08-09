@@ -5,9 +5,8 @@ date: 2019-08-06
 
 > 原文地址: https://overreacted.io/how-does-the-development-mode-work/
 >
-> 原文作者: 
+> 原文作者:  [Dan Abramov](https://mobile.twitter.com/dan_abramov)
 >
-> 
 
 <details>
   <summary>如果你的 JavaScript 代码库已经达到的中等复杂度, 你也许可以选择在 development 和 production 打包和运行不同的代码.</summary>
@@ -223,4 +222,53 @@ if (false) {
     几年以前, 忘了配置环境是过去常常看到的. 你会经常看到一个项目在开发环境下部署到了生产环境.
   </summary>
   A few years ago, it used to be common to forget to configure the environment. You’d often see a project in development mode deployed to production.
+</details>
+
+<details>
+  <summary>
+    这很沮丧, 因为它使得网站加载和运行比较慢.
+  </summary>
+  That’s bad because it makes the website load and run slower.
+</details>
+
+<details>
+  <summary>
+    在最近的两年, 这个情况已经很大的改善. 例如, webpack 增加了一个简单的 <code>mode</code> 选项来替代手动的配置 <code>process.env.NODE_ENV</code> 的替换. 当站点在开发模式下的时候, React Devtools 现在也展示一个红色的 icon, 使其容易发现和甚至是<a href="https://mobile.twitter.com/BestBuySupport/status/1027195363713736704">报告</a>.
+  </summary>
+  In the last two years, the situation has significantly improved. For example, webpack added a simple <code>mode</code> option instead of manually configuring the <code>process.env.NODE_ENV</code> replacement. React DevTools also now displays a red icon on sites with development mode, making it easy to spot and even <a href="https://mobile.twitter.com/BestBuySupport/status/1027195363713736704">report</a>.
+</details>
+
+![](./assets/C0A26828-419A-413A-B8EE-58A615109FEC.png)
+
+<details>
+  <summary>
+    像 Create React App, Next/Nuxt, Vue CLI, Gatsby 这样的观点鲜明的设置工具通过分开开发打包和生产打包成为两个单独的命令使其更难去弄乱.(例如, <code>npm start</code> 和 <code>npm run build</code>) 特别的是, 只有生产打包可以部署, 所以开发者再也不会犯这种错误了.
+  </summary>
+  Opinionated setups like Create React App, Next/Nuxt, Vue CLI, Gatsby, and others make it even harder to mess up by separating the development builds and production builds into two separate commands. (For example, <code>npm start</code> and <code>npm run build</code>.) Typically, only a production build can be deployed, so the developer can’t make this mistake anymore.
+</details>
+
+<details>
+  <summary>
+    这里经常有一个观点, 也许生产模式需要成为默认, 开发模式需要选择性加入. 就个人而言, 我没有发现这个观点是有说服力的. 从开发模式的警告中获益很多的人一般是刚刚接触库. 他们大概是不知道如何开启的, 并且常常会忽略一些可以在早期就被感知到的一些 bug.
+  </summary>
+  There is always an argument that maybe the production mode needs to be the default, and the development mode needs to be opt-in. Personally, I don’t find this argument convincing. People who benefit most from the development mode warnings are often new to the library. They wouldn’t know to turn it on, and would miss the many bugs that the warnings would have detected early.
+</details>
+
+<details>
+  <summary>
+    是的, 性能问题是不好的. 但是, 想终端终于提供破损的, 古怪的体验也是如此. 例如, <a href="https://reactjs.org/docs/lists-and-keys.html#keys">React key warning</a> 帮助避免如发送一个消息给错误的人或买了一个错误的产品这类 bug. 开发过程中关掉该警告, 对你和你的用户都会陷入重大的风险中.如果这个默认是关掉的, 随后你发现了开关并且将其打开, 你将拥有太多的警告需要去清理. 因此大部分的人将关掉开关. 这就是为什么其需要从开始就是开启的, 而不是在之后再开启.
+  </summary>
+  Yes, performance issues are bad. But so is shipping broken buggy experiences to the end users. For example, the<a href="https://reactjs.org/docs/lists-and-keys.html#keys"> React key warnin</a>g helps prevent bugs like sending a message to a wrong person or buying a wrong product. Developing with this warning disabled is a significant risk for you and your users. If it’s off by default, then by the time you find the toggle and turn it on, you’ll have too many warnings to clean up. So most people would toggle it back off. This is why it needs to be on from the start, rather than enabled later.
+</details>
+
+<details>
+  <summary>
+    最后, 即使开发警告是可选的, 并且开发者知道如何在早起的开发中开启它们, 我们将回到最初的问题, 一些人将会意外的在部署生产的时候保持它们是开启的!
+  </summary>
+  Finally, even if development warnings were opt-in, and developers knew to turn them on early in development, we’d just go back to the original problem. Someone would accidentally leave them on when deploying to production!
+</details>
+
+<details>
+  <summary>我们又回到了原点.</summary>
+  And we’re back to square one.
 </details>
