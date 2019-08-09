@@ -96,3 +96,134 @@ class ProfilePage extends React.Component {
 (但是你真的应该关注[Sophie](https://mobile.twitter.com/sophiebits)。)
 
 ---
+
+所以类组件的表现为什么是这样的？
+
+让我们仔细看下```showMessage```这个方法：
+
+```javascript
+class ProfilePage extends React.Component {
+  showMessage = () => {
+    alert('Followed ' + this.props.user);
+  };
+```
+
+这个方法从```this.props.user```中读取用户。在React中，props是不可变的，所以它们不会改变。**但是，```this```一直都是可变的。**
+
+事实上，这就是```this```在class中的目的。React通过经常的更新this来保证你在render和生命周期方法中总能读取到最新版本的数据。
+
+所以，当我们请求期间，this.props改变了，```showMessage```方法就会从’太新‘的props中读取用户信息。
+
+这其实展露了一个关于UI本质的现象。如果概念上来说UI是应用当前状态的一种映射，**那处理事件其实也是渲染的一部分结果 - 就像视觉上的渲染输出一样**。我们的处理事件其实”属于“某个特定props和state生成的特定渲染。
+
+但是，延时任务打破了这种关联。我们的```showMessage```回调不再和特定的渲染绑定，所以就”失去“了其正确的props。正是从this中读取这个行为，切断了两者之间的关联。
+
+---
+
+假设函数组件不存在，我们会怎么解决这类问题？
+
+我们想沿着props丢失的地方，以某种方式修复正确的props生成的渲染和showMessage回调之间的关联。
+
+其中一种方法就是尽早地从```this.props```中读取信息，然后显示地传递给延时任务的回调函数。
+
+```javascript
+class ProfilePage extends React.Component {
+  showMessage = (user) => {
+    alert('Followed ' + user);
+  };
+
+  handleClick = () => {
+    const {user} = this.props;
+    setTimeout(() => this.showMessage(user), 3000);
+  };
+
+  render() {
+    return <button onClick={this.handleClick}>Follow</button>;
+  }
+}
+```
+
+上面这种方法可以奏效。但是，随着时间的推移，这样的代码会变得很啰嗦，并且容易出错。如果需要更多属性怎么办？如果还要访问state呢？如果```showMessage```又调用了别的函数，而这个函数又从props或者state读取了某些属性，我们又会遇到同样的问题。所以我们还是得传递this.props和this.state给每个在showMessage中被调用的函数。
+
+这么做很容易降低效率。而且开发人员很容易忘记，也很难保证一定会按照上面的方法来避免问题，所以经常要去解决这类bug。
+
+同样的，把`alert`代码内联到`handleClick`也解决不了这个问题。我们希望以更细的粒度来组织代码，同时也希望能读取和特定渲染对应的props和state值。**这个问题其实非React才有，-- 任何一个存在类似`this`这类可变数据对象的UI框架都会有**。
+
+可能有人会说，我们是不是可以在构造函数中绑定这些方法？
+
+```javascript
+class ProfilePage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.showMessage = this.showMessage.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  showMessage() {
+    alert('Followed ' + this.props.user);
+  }
+
+  handleClick() {
+    setTimeout(this.showMessage, 3000);
+  }
+
+  render() {
+    return <button onClick={this.handleClick}>Follow</button>;
+  }
+}
+```
+
+这样其实根本没什么用。记住，问题在于我们读取`this.props`的时机太晚了 - 和我们用的语法没什么关系！不过，如果我们借助JavaScript的闭包，就可以完全解决这个问题。
+
+平时我们总是避免闭包。因为随着时间推移，闭包中的可变对象会变得很难维护。但是在React中props和state都是不可变的(至少我们是这么推荐的！)。这样就避免了搬起石头砸自己的脚。
+
+这意味着如果你将每次渲染的props或者state关住，你就可以保证他们对应的都是特定渲染的结果：
+
+```javascript
+class ProfilePage extends React.Component {
+  render() {
+    // Capture the props!
+    const props = this.props;
+
+    // Note: we are *inside render*.
+    // These aren't class methods.
+    const showMessage = () => {
+      alert('Followed ' + props.user);
+    };
+
+    const handleClick = () => {
+      setTimeout(showMessage, 3000);
+    };
+
+    return <button onClick={handleClick}>Follow</button>;
+  }
+}
+```
+
+你在渲染的时候就”捕获“了props：
+
+![Capturing Pokemon](https://overreacted.io/pokemon-fa483dd5699aac1350c57591770a49be.gif)
+
+这样一来，任何内部的代码(包括`showMessage`)就能保证读取到的都是这次渲染的props。React也就”动不了我们的奶酪”了。
+
+然后我们想加多少函数就能加多少，并且它们都能读取到正确的props或者state。闭包简直是救星！
+
+但是上面的[例子](https://codesandbox.io/s/oqxy9m7om5)看起来有些奇怪。既然都有类了，我们为什么还要在render函数里定义函数，而不直接定义类的方法？
+
+事实上，我们可以通过拿掉“class”的外壳来简化代码：
+
+```javascript
+function ProfilePage(props) {
+  const showMessage = () => {
+    alert('Followed ' + props.user);
+  };
+
+  const handleClick = () => {
+    setTimeout(showMessage, 3000);
+  };
+
+  return (
+    <button onClick={handleClick}>Follow</button>
+  );
+}
+```
