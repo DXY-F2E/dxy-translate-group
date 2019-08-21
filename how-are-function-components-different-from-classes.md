@@ -227,3 +227,66 @@ function ProfilePage(props) {
   );
 }
 ```
+
+和之前的例子一样，这里的`props`也能被捕获 - 因为React将它作为参数传递。不同于`this`，React不会对这里的`props`对象对任何修改。
+
+如果你在函数定义中将`props`解构，看起来会更加明显。
+
+```javascript
+function ProfilePage({ user }) {
+  const showMessage = () => {
+    alert('Followed ' + user);
+  };
+
+  const handleClick = () => {
+    setTimeout(showMessage, 3000);
+  };
+
+  return (
+    <button onClick={handleClick}>Follow</button>
+  );
+}
+```
+
+当父组件以不同的props去渲染`ProfilePage`组件时，React会重新调用`ProfilePage`这个函数。但是我们之前已经触发的事件处理函数仍然“属于”上一次渲染，并且`user`的值以及引用它的`showMessage`回调也“属于”上一次。一切都是原封不动。
+
+这也就是为什么，在这个[demo](https://codesandbox.io/s/pjqnl16lm7)的函数式版本中，点击关注Sophie，然后切换到Sunil，却仍然提示`Followed Sophie`:
+
+![Demo of correct behavior](https://overreacted.io/fix-84396c4b3982827bead96912a947904e.gif)
+
+---
+
+现在，我们理解了React中函数式组件和类组件之间最大的区别就是：
+
+> 函数式组件可以捕获渲染的值。
+
+**在Hooks中，这个规则也同样适用于state。** 假如有下面的例子：
+
+```javascript
+function MessageThread() {
+  const [message, setMessage] = useState('');
+
+  const showMessage = () => {
+    alert('You said: ' + message);
+  };
+
+  const handleSendClick = () => {
+    setTimeout(showMessage, 3000);
+  };
+
+  const handleMessageChange = (e) => {
+    setMessage(e.target.value);
+  };
+
+  return (
+    <>
+      <input value={message} onChange={handleMessageChange} />
+      <button onClick={handleSendClick}>Send</button>
+    </>
+  );
+}
+```
+
+(这里是[在线Demo](https://codesandbox.io/s/93m5mz9w24))
+
+尽管这不是一个很好的聊天应用界面，但是它也能说明同样的问题：如果我发送了一条消息，应用应该清楚地知道我发送了哪条消息。这个函数组件中的`message`捕获了特定渲染的state，而浏览器所点击的事件处理函数也是渲染结果的一部分。所以`message`就是我点击“Send”时输入的值。
