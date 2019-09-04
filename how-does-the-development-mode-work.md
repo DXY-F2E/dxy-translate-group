@@ -39,16 +39,16 @@ date: 2019-08-06
 
 <details>
   <summary>
-    在开发环境运行不同的代码的确切的方式依赖你的 JavaScript 构建流程(以及是否有一个). 在 Facebook 它看起来像这样:
+    在开发环境运行不同的代码的确切方式依赖你的 JavaScript 构建流程(以及是否有一个). 在 Facebook 它看起来像这样:
   </summary>
   The exact way to run different code in development depends on your JavaScript build pipeline (and whether you have one). At Facebook it looks like this:
 </details>
 
 ```js
 if (__DEV__) {
-  doSomethingDev()
+  doSomethingDev();
 } else {
-  doSomethingProd()
+  doSomethingProd();
 }
 ```
 
@@ -77,7 +77,7 @@ if (false) {
 
 <details>
   <summary>
-    在生产环境下, 你还要在代码之上运行一个缩小器(minifier)(比如 terser). 大多数的 JavaScript 缩小器(minifier) 会做一些有限制的 <a href="https://zh.wikipedia.org/wiki/死碼刪除">死码删除</a>, 比如移除 <code>if (false)</code> 分支, 因此在生产环境你将会看到:
+    在生产环境下, 你还要在代码之上运行一个压缩器(minifier)(比如 terser). 大多数的 JavaScript 压缩器(minifier) 会做一些有限制的 <a href="https://zh.wikipedia.org/wiki/死碼刪除">死码删除</a>, 比如移除 <code>if (false)</code> 分支, 因此在生产环境你将会看到:
   </summary>
   In production, you’d also run a minifier (for example, terser) on the code. Most JavaScript minifiers do a limited form of dead code elimination, such as removing if (false) branches. So in production you’d only see:
 </details>
@@ -148,7 +148,7 @@ if ('production' !== 'production') {
 
 <details>
   <summary>
-    因为整个表达式是固定的 (<code>'production' !== 'production'</code>保证为 <code>false</code>), 一个压缩器同样可以移除其他的分支.
+    因为整个表达式是固定的 (<code>'production' !== 'production'</code>保证为 <code>false</code>), 压缩器还可以移除其他的分支.
   </summary>
   Because the whole expression is constant (<code>'production' !== 'production'</code> is guaranteed to be <code>false</code>), a minifier can also remove the other branch.
 </details>
@@ -160,7 +160,7 @@ doSomethingProd();
 
 <details>
   <summary>
-    恶作剧完成
+    恶作剧完成.
   </summary>
   Mischief managed.
 </details>
@@ -276,14 +276,14 @@ if (false) {
 <details>
   <summary>个人而言, 我相信, 工具显示和使用正确的模式取决于你是在调试还是在部署. 除了 web 浏览器, 几乎所有其他环境(无论 mobile, desktop, 或者是 server)都已经有一个方式去加载和区分开发和生产构建, 这已经存在了数十年了.</summary>
   Personally, I believe in tools that display and use the right mode depending on whether you’re debugging or deploying. Almost every other environment (whether mobile, desktop, or server) except the web browser has had a way to load and differentiate development and production builds for decades.
-<details>
+</details>
 
 <details>
   <summary>也许是时候 JavaScript 环境视该区别为第一类需求, 而不是由库提出并依赖临时的约定.</summary>
   Instead of libraries coming up with and relying on ad-hoc conventions, perhaps it’s time the JavaScript environments see this distinction as a first-class need.
 </details>
 
----
+-----------
 
 <details>
   <summary>足够的哲学!</summary>
