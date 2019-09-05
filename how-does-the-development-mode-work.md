@@ -433,9 +433,9 @@ if (process.env.NODE_ENV === 'production') {
 
 <details>
   <summary>
-    react.production.min.js 和 react.development.js 两者都不在有任何的 process.env.NODE_ENV 检查. 这是很棒的, 因为当实际在 Node.js 中运行的时候, 访问 process.env 稍许缓慢. 提前在两个模式下编译 bundle 也让我们优化文件体积更加一致, 无论你使用的是那种打包器和压缩器.
+    react.production.min.js 和 react.development.js 两者都不在有任何的 <code>process.env.NODE_ENV</code> 检查. 这是很棒的, 因为当实际在 Node.js 中运行的时候, 访问 <code>process.env</code> 稍许缓慢. 提前在两个模式下编译 bundle 也让我们优化文件体积更加一致, 无论你使用的是哪种打包器和压缩器.
   </summary>
-  Both react.production.min.js and react.development.js don’t have any process.env.NODE_ENV checks anymore. This is great because when actually running on Node.js, accessing process.env is somewhat slow. Compiling bundles in both modes ahead of time also lets us optimize the file size much more consistently, regardless of which bundler or minifier you are using.
+  Both react.production.min.js and react.development.js don’t have any <code>process.env.NODE_ENV</code> checks anymore. This is great because when actually running on Node.js, accessing <code>process.env</code> is somewhat slow. Compiling bundles in both modes ahead of time also lets us optimize the file size much more consistently, regardless of which bundler or minifier you are using.
 </details>
 
 <details>
