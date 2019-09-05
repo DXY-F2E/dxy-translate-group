@@ -447,7 +447,7 @@ if (process.env.NODE_ENV === 'production') {
 
 <details>
   <summary>
-    我希望, 这里会有一个更一流的方式来做, 而不是依赖约定, [but here we are]. 如果模式在所有的 JavaScript 环境中是一流概念, 并且如果在浏览器中有一些方式来揭露, 当某些代码没有被认为应该是运行在 development 模式下, 这应该是很棒的.
+    我希望, 这里会有一个更一流的方式来做, 而不是依赖约定, [but here we are]. 如果模式在所有的 JavaScript 环境中是一流概念, 并且当某些代码没有被认为应该是运行在 development 模式下的时候, 如果浏览器中有一些方式来揭露, 这应该是很棒的.
   </summary>
   I wish there was a more first-class way to do it without relying on conventions, but here we are. It would be great if modes were a first-class concept in all JavaScript environments, and if there was some way for a browser to surface that some code is running in a development mode when it’s not supposed to.
 </details>
