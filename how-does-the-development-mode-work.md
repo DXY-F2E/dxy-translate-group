@@ -314,7 +314,7 @@ if (process.env.NODE_ENV !== 'production') {
 </details>
 
 <details>
-  <summary>就像在程序中的许多东西, 该特殊的约定也多数是历史原因. 我们继续使用它是因为现在他已经广泛的被不同的工具适配. 切换到其他是昂贵的并且没有太多收益.</suumary>
+  <summary>就像在程序中的许多东西, 该特殊的约定也多数是历史原因. 我们继续使用它是因为现在他已经广泛的被不同的工具适配. 切换到其他是昂贵的并且没有太多收益.</summary>
   Like many things in programming, this particular convention has mostly historical reasons. We are still using it because now it’s widely adopted by different tools. Switching to something else is costly and doesn’t buy much.
 </details>
 
