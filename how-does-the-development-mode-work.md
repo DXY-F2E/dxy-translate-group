@@ -367,9 +367,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 <details>
   <summary>
-    到了 2019 年, browserify 已经失去了大量的市场占有率. 但是, 在构建步骤将 process.env.NODE_ENV 替换成 'development' 或者是 'production' 是一种非常流行的约定.
+    到了 2019 年, browserify 已经失去了大量的市场占有率. 但是, 在构建步骤将 <code>process.env.NODE_ENV</code> 替换成 'development' 或者是 'production' 是一种非常流行的约定.
   </summary>
-  By 2019, browserify has lost quite a bit of mindshare. However, replacing process.env.NODE_ENV with 'development' or 'production' during a build step is a convention that is as popular as ever.
+  By 2019, browserify has lost quite a bit of mindshare. However, replacing <code>process.env.NODE_ENV</code> with 'development' or 'production' during a build step is a convention that is as popular as ever.
 </details>
 
 <details>
