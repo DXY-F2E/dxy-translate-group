@@ -353,7 +353,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 <details>
   <summary>
-    React 从一开始就提供 npm 构建(除 <code>&lt;script&gt;</code> 标签构建外). 随着 React 流行, 使用 CommonJS 模块编写模块化 JavaScript 并通过 npm 发送前端代码
+    React 从一开始就提供 npm 构建(除 <code>&lt;script&gt;</code> 标签构建外). 随着 React 流行, 使用 CommonJS 模块编写模块化 JavaScript 并通过 npm 发送前端代码也流行起来.
   </summary>
   React started providing npm builds (in addition to <code>&lt;script&gt;</code> tag builds) from the very beginning. As React got popular, so did the practice of writing modular JavaScript with CommonJS modules and shipping front-end code via npm.
 </details>
