@@ -102,7 +102,7 @@ doSomethingProd()
 </details>
 
 ```js
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV !== 'production') {
   doSomethingDev()
 } else {
   doSomethingProd()
