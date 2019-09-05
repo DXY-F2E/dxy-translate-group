@@ -212,7 +212,7 @@ if (false) {
 
 <details>
   <summary>
-    为了让这些工作, 你的打包器需要去做 <code>process.env.NODE</code> 的替换, 并且需要知道你要在哪种模式下构建该项目.
+    为了让这些工作, 你的打包器需要去做 <code>process.env.NODE_ENV</code> 的替换, 并且需要知道你要在哪种模式下构建该项目.
   </summary>
   For all of this to work, your bundler needs to do the <code>process.env.NODE_ENV</code> replacement, and needs to know in which mode you want to build the project in.
 </details>
