@@ -374,7 +374,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 <details>
   <summary>
-    <i></i>
+    <i>改变现状, 看看如何采用 ES 模块作为分发格式将是很有趣的, 而不是一个创作格式. 在 Twitter 上面告诉我?</i>
   </summary>
   <i>(It would be interesting to see how adoption of ES Modules as a distribution format, rather than just the authoring format, changes the equation. Tell me on Twitter?)</i>
 </details>
@@ -383,14 +383,14 @@ if (process.env.NODE_ENV !== 'production') {
 
 <details>
   <summary>
-    有一件事情有可能依然在迷惑你, 在Github 上面的 React 源码, 你将看到 __DEV__ 还在作为魔术变量来使用. 但是在 npm 的 React 代码, 其使用 process.env.NODE_ENV. 这是怎么工作的?
+    有一件事情有可能依然在迷惑你, 在Github 上面的 React 源码, 你将看到 __DEV__ 还在作为魔术变量来使用. 但是在 npm 的 React 代码, 其使用 <code>process.env.NODE_ENV</code>. 这是怎么工作的?
   </summary>
-  One thing that might still confuse you is that in React source code on GitHub, you’ll see __DEV__ being used as a magic variable. But in the React code on npm, it uses process.env.NODE_ENV. How does that work?
+  One thing that might still confuse you is that in React source code on GitHub, you’ll see __DEV__ being used as a magic variable. But in the React code on npm, it uses <code>process.env.NODE_ENV</code>. How does that work?
 </details>
 
 <details>
   <summary>
-    在历史上, 我们在源码中使用 __DEV__ 来满足 Facebook 的源码. 很长时间, React 是直接 copy 进入 Facebook 的代码库, 所以它需要跟随相同的规则. 对于 npm, 我们有一个构建步骤, 其按字面的在发布之前将 __DEV__ 检查替换成 process.env.NODE_ENV !== 'production'.
+    在历史上, 我们在源码中使用 <code>__DEV__</code> 来满足 Facebook 的源码. 长期以来, React 是直接 copy 进入 Facebook 的代码库, 所以它需要遵循相同的规则. 对于 npm, 我们有一个构建步骤, 其按字面的在发布之前将 <code>__DEV__</code> 检查替换成 <code>process.env.NODE_ENV !== 'production'</code>.
   </summary>
   Historically, we’ve used __DEV__ in the source code to match the Facebook source code. For a long time, React was directly copied into the Facebook codebase, so it needed to follow the same rules. For npm, we had a build step that literally replaced the __DEV__ checks with process.env.NODE_ENV !== 'production' right before publishing.
 </details>
@@ -426,7 +426,7 @@ if (process.env.NODE_ENV === 'production') {
 
 <details>
   <summary>
-    并且这里是你的打包器将 <code>'development'</code> 或者是 <code>'production'</code> 作为字符串插入的唯一地方, 并且这里是你的压缩器摆脱 development-only <code>require</code> 的地方.
+    并且这里是你的打包器将 <code>'development'</code> 或者是 <code>'production'</code> 作为字符串插入的唯一地方, 并且这里是你的压缩器移除 development-only <code>require</code> 的地方.
   </summary>
   And that’s the only place where your bundler will interpolate either <code>'development'</code> or <code>'production'</code> as a string, and where your minifier will get rid of the development-only <code>require</code>.
 </details>
@@ -454,7 +454,7 @@ if (process.env.NODE_ENV === 'production') {
 
 <details>
   <summary>
-    另一方面, 在一个单一的项目中一个约定可以传播至生态是非常迷人的. 在 2010 年 EXPRESS_ENV 成为 NODE_ENV, 并且在 2013 蔓延至前端. 也许该解决方案不是最好的, 但是对于每一个项目, 采用这个的成本是低于说服其他人做一些不同的事情的成本. 这教授了关于采用的自上而下与自下而上的有价值的经验. 了解这种动态如何发挥作用将成功的标准化尝试与失败区分开来.
+    另一方面, 一个单一的项目中一个约定可以传播至生态是非常迷人的. 在 2010 年 <code>EXPRESS_ENV</code> 成为 <code>NODE_ENV</code>, 并且在 2013 年蔓延至前端. 也许该解决方案不是最好的, 但是对于每一个项目, 采用这个的成本是低于说服其他人做一些不同的事情的成本. 这教授了关于采用的自上而下与自下而上的有价值的经验. 了解这种动态如何发挥作用将成功的标准化尝试与失败区分开来.
   </summary>
   On the other hand, it is fascinating how a convention in a single project can propagate through the ecosystem. EXPRESS_ENV became NODE_ENV in 2010 and spread to front-end in 2013. Maybe the solution isn’t perfect, but for each project the cost of adopting it was lower than the cost of convincing everyone else to do something different. This teaches a valuable lesson about the top-down versus bottom-up adoption. Understanding how this dynamic plays out distinguishes successful standardization attempts from failures.
 </details>
@@ -472,3 +472,6 @@ if (process.env.NODE_ENV === 'production') {
   </summary>
   As with any powerful feature, there are some ways you can misuse it. This will be the topic of my next post!
 </details>
+
+> 如果你想优化该篇文章, 可以前往 [这里](https://github.com/DXY-F2E/dxy-translate-group/pull/3) 来帮忙优化, 感谢🍻
+
