@@ -70,7 +70,7 @@ class ProfilePage extends React.Component {
 
 在解释之前，我想强调一点：我描述的差别和 React Hooks 本身无关。因为刚才的例子都没用到 Hooks！
 
-这个差别只关乎函数组件和类组件。你应该会想要弄明白如果你经常用到函数组件的话。
+这个差别只关乎函数组件和类组件。如果你经常用到函数组件的话, 你应该要理解它。
 
 ---
 
@@ -354,3 +354,29 @@ function MessageThread() {
 通常我们不需要这样使用 Ref。大部分情况下，捕获 props 或 state 是更好的方式。但是，当处理一些命令式的 APIs 像`interval`和`subscriptions`会比较方便。记住你可以像使用 this 一样来追踪任何值 -- 一个属性，一个状态变量，整个 props 对象，甚至是一个函数。
 
 这个模式可以方便地优化代码 -- 例如`useCallback`的依赖改变的过于频繁时。但是，使用 reducer 通常是一个更好地选择(又是一个可以用一篇文章来讨论的新特性！)
+
+---
+
+在这片文章里，我们了解了类中常见的问题，以及闭包是如何帮我们解决的。但是，当你想要指定依赖来优化 Hooks 的时候，可能会遇到过期的闭包问题。这是否意味着闭包才是问题所在呢？我不这么认为。
+
+就像我们上面看到的，闭包帮助我们解决了一些平时很难注意到的细微的问题。并且，它也能帮我们方便地写出在[并发模式](https://reactjs.org/blog/2018/03/01/sneak-peek-beyond-react-16.html)下也可以正常工作的代码。这是因为组件内部逻辑绑定了它渲染时所对应的的 props 和 state。
+
+在我所了解的案例中，“过期的闭包”问题都是因为开发者错误的认为“函数不会改变”或者“props 一直都是相同的”。但事实并非如此，希望我这篇文章里已经解释清楚了。
+
+函数组件会和 props 和 state 绑定，所以确认它们的对应性很重要。这不是 bug，而是函数组件的特点。例如，函数也不应该从 useEffect 或者 useCallback 的依赖中被移除。（正确的做法是使用 useReducer 或者 useRef 解决，我们很快就会出一份关于 2 者如何选择的文档）。
+
+当我们在我们的 React 项目中大量使用函数组件时，我们需要调整对[代码优化](https://github.com/ryardley/hooks-perf-issues/pull/3)以及[哪些值会随着时间改变](https://github.com/facebook/react/issues/14920)的看法。
+
+就像[Fredrik 说得](https://mobile.twitter.com/EphemeralCircle/status/1099095063223812096)：
+
+> 到目前为止，我发现使用 hooks 最好的心智规则就是：编码的时候当做任何值在任何时候都会改变。
+
+函数也不应该排除在这条规则之外。但是把它当做 React 学习中的常识还需要一段时间。因为它要求开发者从类组件的心智模型中做一些调整。但是我希望这篇文章能帮你从一个全新的视角看待这个问题。
+
+React 函数组件总是能捕获它们的值 -- 现在我们知道了为什么。
+
+![Smiling Pikachu](https://overreacted.io/pikachu-fc3bddf6d4ca14bc77917ac0cfad3608.gif)
+
+因为它们是各种不同的神奇宝贝。
+
+[Discuss on Twitter](https://mobile.twitter.com/search?q=https%3A%2F%2Foverreacted.io%2Fhow-are-function-components-different-from-classes%2F) • [Edit on GitHub](https://github.com/gaearon/overreacted.io/edit/master/src/pages/how-are-function-components-different-from-classes/index.md)
